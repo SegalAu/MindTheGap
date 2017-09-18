@@ -1,0 +1,43 @@
+package ca.ubc.cs.cpsc210.mindthegap.TfL;
+
+/*
+ * Copyright 2015-2016 Department of Computer Science UBC
+ */
+
+import ca.ubc.cs.cpsc210.mindthegap.model.Line;
+import ca.ubc.cs.cpsc210.mindthegap.model.Station;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Set;
+
+/**
+ * Wrapper for TfL Arrival Data Provider
+ */
+public class TfLHttpArrivalDataProvider extends AbstractHttpDataProvider {
+    //private static final String ARRIVALS_API_BASE = "https://api.tfl.gov.uk";              // for TfL data
+    private static final String ARRIVALS_API_BASE = "http://kunghit.ugrad.cs.ubc.ca:6060";   // for simulated data (3pm to midnight)
+    private Station stn;
+
+    public TfLHttpArrivalDataProvider(Station stn) {
+        super();
+        this.stn = stn;
+    }
+
+    @Override
+    protected URL getURL() throws MalformedURLException {
+        Set<Line> lineSet = stn.getLines();
+        String lineString = "";
+        for (Line line : lineSet) {
+            if (lineString.equals("")) {
+                lineString = lineString + line.getId();
+            } else {
+                lineString = lineString + "," + line.getId();
+            }
+        }
+        String url = ARRIVALS_API_BASE + "/Line/" + lineString + "/Arrivals?stopPointId=" + stn.getID() + "&app_id=&app_key=";
+        System.out.println(lineString);
+        System.out.println(url);
+        return new URL(url);
+    }
+}
