@@ -1,7 +1,7 @@
 package ca.ubc.cs.cpsc210.mindthegap;
 
 /*
- * Copyright 2016-2017 Department of Computer Science UBC
+ * Copyright 2015-2016 Department of Computer Science UBC
  */
 
 import android.app.ActionBar;
